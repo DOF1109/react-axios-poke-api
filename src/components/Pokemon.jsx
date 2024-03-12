@@ -16,10 +16,13 @@ const Pokemon = () => {
     axios(url)
       .then(resp => {
         console.log(resp.data)
-        setPoke({...poke}, poke.name = resp.data.name)
-        setPoke({...poke}, poke.img = resp.data.sprites.front_default)
+        setPoke({
+          name: resp.data.name,
+          img: resp.data.sprites.front_default
+        })
         console.log('Cambiamos poke!')
       })
+      .catch(error => console.error('Ocurrió un eror:\n' + error))
   }
 
   return (
@@ -28,7 +31,7 @@ const Pokemon = () => {
         'Loading...' :
         <>
           <h2>{poke.name}</h2>
-          <img src={poke.img} alt={poke.name} width='300' />
+          <img src={poke.img} alt={poke.name} width='200' />
           <button onClick={handleChangePoke}>Cambiar Poke!</button>
         </>}
     </>
