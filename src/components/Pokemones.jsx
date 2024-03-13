@@ -9,18 +9,32 @@ const Pokemones = () => {
   const [pokeArray, setPokeArray] = useState([])
   const url = 'https://pokeapi.co/api/v2/type/3'
 
+  const changePokemon = () => {
+    setPoke({ 
+      name: pokeArray[0].pokemon.name, 
+      img : pokeArray[0].pokemon.url
+    })
+  }
+
   useEffect(() => {
     axios(url)
       .then( resp => {
-        console.log(resp.data.pokemon);
         setPokeArray(resp.data.pokemon)
-        console.log(pokeArray);
+        changePokemon()
       })
+      .catch(error => console.error('Ocurrió un eror:\n' + error))
   }, [])
 
   return (
     <>
-      <h1>Pokes</h1>
+      {poke.name === '' ?
+        'Loading...' :
+        <>
+          <h2>{poke.name}</h2>
+          <img src={poke.img} alt={poke.name} />
+          <button onClick={changePokemon}>Cambiar Pokemon!</button>
+        </>
+      }
     </>
   )
 }
